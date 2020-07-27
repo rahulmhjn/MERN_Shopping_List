@@ -1,6 +1,8 @@
 import React from "react";
 import AppNavbar from "./components/AppNavbar";
 import ShoppingList from "./components/ShoppingList";
+import ItemModal from "./components/ItemModal";
+import { Container } from "reactstrap";
 import { Provider as ItemProvider } from "./context/ItemsContext";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,7 +13,10 @@ function App() {
     <ItemProvider>
       <div className="App">
         <AppNavbar />
-        <ShoppingList />
+        <Container>
+          <ItemModal />
+          <ShoppingList />
+        </Container>
       </div>
     </ItemProvider>
   );

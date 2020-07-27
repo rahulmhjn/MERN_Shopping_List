@@ -11,11 +11,14 @@ const initialState = [
 const itemReducer = (state, action) => {
   switch (action.type) {
     case "GET_ITEMS":
-      return action.payload;
+      return { ...state, items: [action.payload] };
     case "POST_ITEM":
-      return [...state, action.payload];
+      return { ...state, items: [action.payload, ...state.items] };
     case "DELETE_ITEM":
-      return [...state.filter((ele) => ele.id !== action.payload)];
+      return {
+        ...state,
+        items: state.items.filter((ele) => ele.id !== action.payload),
+      };
     default:
       return false;
   }
@@ -36,5 +39,5 @@ const deleteItem = (dispatch) => (id) => {
 export const { Provider, Context } = createDataContext(
   itemReducer,
   { getItems, addItem, deleteItem },
-  initialState
+  { items: initialState }
 );
