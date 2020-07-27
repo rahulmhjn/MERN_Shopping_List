@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 require("colors");
 const mongoDb = require("./config/db");
 
+const items = require("./routes/api/items");
+
 dotenv.config({ path: "./config/config.env" });
 
 const app = express();
@@ -13,6 +15,9 @@ app.use(express.json());
 
 //Connect to mongodb
 mongoDb();
+
+// Use Routes
+app.use("/api/items", items);
 
 const PORT = process.env.PORT || 5000;
 
