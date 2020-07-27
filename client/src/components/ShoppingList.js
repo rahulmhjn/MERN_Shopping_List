@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Context as ItemContext } from "../context/ItemsContext";
 import { v1 as uuid } from "uuid";
 
 const ShoppingList = () => {
-  const itemsarr = [
-    { id: uuid(), name: "Eggs" },
-    { id: uuid(), name: "Milk" },
-    { id: uuid(), name: "Steak" },
-    { id: uuid(), name: "Water" },
-  ];
-
-  const [items, setItems] = useState(itemsarr);
+  const { state, addItem, deleteItem, getItems } = useContext(ItemContext);
 
   return (
     <Container>
@@ -21,7 +15,9 @@ const ShoppingList = () => {
         onClick={() => {
           const name = prompt("Enter Item");
           if (name) {
-            setItems([...items, { id: uuid(), name }]);
+            // setItems([...items, { id: uuid(), name }]);
+            const newItem = { id: uuid(), name: name };
+            addItem(newItem);
           }
         }}
       >
@@ -30,7 +26,7 @@ const ShoppingList = () => {
 
       <ListGroup>
         <TransitionGroup className="shopping-list">
-          {items.map(({ id, name }) => (
+          {state.map(({ id, name }) => (
             <CSSTransition key={id} timeout={500} classNames="fade">
               <ListGroupItem>
                 <Button
@@ -38,7 +34,8 @@ const ShoppingList = () => {
                   color="danger"
                   size="sm"
                   onClick={() => {
-                    setItems(items.filter((item) => item.id !== id));
+                    // setItems(items.filter((item) => item.id !== id));
+                    deleteItem(id);
                   }}
                 >
                   &times;
