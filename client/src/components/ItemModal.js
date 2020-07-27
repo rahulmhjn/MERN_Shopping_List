@@ -9,7 +9,6 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { v1 as uuid } from "uuid";
 import { Context as ItemContext } from "../context/ItemsContext";
 
 const ItemModal = () => {
@@ -27,7 +26,7 @@ const ItemModal = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (name) {
-      const newItem = { id: uuid(), name: name };
+      const newItem = { name: name };
 
       // Add item via add action
       addItem(newItem);

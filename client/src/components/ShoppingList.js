@@ -1,23 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Context as ItemContext } from "../context/ItemsContext";
-import { v1 as uuid } from "uuid";
 
 const ShoppingList = () => {
-  const {
-    state: { items },
-    addItem,
-    deleteItem,
-    getItems,
-  } = useContext(ItemContext);
+  const { state, getItems, deleteItem } = useContext(ItemContext);
+
+  useEffect(() => {
+    getItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container>
       <ListGroup>
         <TransitionGroup className="shopping-list">
-          {items.map(({ id, name }) => (
-            <CSSTransition key={id} timeout={500} classNames="fade">
+          {state.items.map(({ _id, name }) => (
+            <CSSTransition key={_id} timeout={500} classNames="fade">
               <ListGroupItem>
                 <Button
                   className="remove-btn"
@@ -25,7 +24,7 @@ const ShoppingList = () => {
                   size="sm"
                   onClick={() => {
                     // setItems(items.filter((item) => item.id !== id));
-                    deleteItem(id);
+                    deleteItem(_id);
                   }}
                 >
                   &times;
