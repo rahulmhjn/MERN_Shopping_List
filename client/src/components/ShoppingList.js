@@ -38,7 +38,7 @@ const ShoppingList = () => {
                   color="danger"
                   size="sm"
                   onClick={() => {
-                    setItems(items.filter((item) => item.id != id));
+                    setItems(items.filter((item) => item.id !== id));
                   }}
                 >
                   &times;
