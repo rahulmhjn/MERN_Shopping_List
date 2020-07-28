@@ -5,6 +5,10 @@ const router = express.Router();
 // Item Model
 const Item = require("../../models/Item");
 
+const requireAuth = require("../middleware/requireAuth");
+
+// router.use(requireAuth);
+
 // @route   GET api/items
 // @desc    GET all items
 // @access  Public
@@ -16,8 +20,8 @@ router.get("/", async (req, res) => {
 
 // @route   POST api/items
 // @desc    Create An item
-// @access  Public
-router.post("/", async (req, res) => {
+// @access  Private
+router.post("/", requireAuth, async (req, res) => {
   const newItem = { name: req.body.name };
   const item = await Item.create(newItem);
   return res.status(201).json(item);
@@ -25,8 +29,8 @@ router.post("/", async (req, res) => {
 
 // @route   DELETE api/items/:id
 // @desc    Delete A item
-// @access  Public
-router.delete("/:id", async (req, res) => {
+// @access  Private
+router.delete("/:id", requireAuth, async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
 
