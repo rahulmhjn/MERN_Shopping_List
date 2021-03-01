@@ -2,12 +2,18 @@ import React, { useContext, useEffect } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Context as ItemContext } from "../context/ItemsContext";
+import { Context as AuthContext } from "../context/AuthContext";
+import { Context as ErrorContext } from "../context/ErrorContext";
 
 const ShoppingList = () => {
   const { state, getItems, deleteItem } = useContext(ItemContext);
+  const { loadUser } = useContext(AuthContext);
+  const {} = useContext(ErrorContext);
 
   useEffect(() => {
     getItems();
+    loadUser();
+    console.log("rsh");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
